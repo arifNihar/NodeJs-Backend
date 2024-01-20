@@ -90,14 +90,14 @@ const likeUnlikePost = async (req, res) => {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    const userLikedPost = post.like.includes(userId);
+    const userLikedPost = post.likes.includes(userId);
 
     if (!userLikedPost) {
-      post.like.push(userId);
+      post.likes.push(userId);
       await post.save();
       res.status(200).json({ message: "Post Liked successfully" });
     } else {
-      await Post.updateOne({ _id: postId }, { $pull: { like: userId } });
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
       res.status(200).json({ message: "Post Unliked successfully" });
     }
   } catch (error) {
@@ -141,6 +141,7 @@ const getFeedPosts = async (req, res) => {
     const feedPosts = await Post.find({ postedBy: { $in: following } }).sort({
       createdAt: -1,
     });
+
     res.status(200).json(feedPosts);
   } catch (error) {
     res.status(500).json({ error: error.message });

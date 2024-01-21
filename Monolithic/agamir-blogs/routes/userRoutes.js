@@ -4,24 +4,24 @@ import {
   deleteUser,
   getUser,
   getUsers,
-  signout,
+  signOut,
   updateUser,
   google,
-  signin,
-  signup,
+  signIn,
+  signUp,
 } from "../controllers/userController.js";
 
 const router = express.Router();
 
 // Auth routes
-router.post("/signup", signup);
-router.post("/signin", signin);
+router.post("/signup", signUp);
+router.post("/signin", signIn);
 router.post("/google", google);
 
 //Users routes
 router.put("/update/:userId", verifyUserByToken, updateUser);
 router.delete("/:userId", verifyUserByToken, deleteUser);
-router.post("/signout", signout);
+router.post("/signout", signOut);
 router.get("/users", verifyUserByToken, getUsers);
 router.get("/:userId", getUser);
 
